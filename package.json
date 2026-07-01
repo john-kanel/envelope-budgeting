@@ -10,6 +10,7 @@
     "lint": "eslint",
     "test": "node --test --import tsx tests/**/*.test.ts",
     "db:push": "prisma db push",
+    "db:check": "tsx scripts/db-check.ts",
     "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
