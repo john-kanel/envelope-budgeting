@@ -30,7 +30,7 @@ Envelope Budgeting is a mobile-friendly personal finance app focused on:
 2. Open your **web service → Variables**.
 3. Add a reference to Postgres `DATABASE_URL`.
 4. Add `JWT_SECRET` (long random string).
-5. Deploy from GitHub — build runs `prisma db push` to create tables automatically.
+5. Deploy from GitHub — on startup the app runs `prisma db push` to create/update tables.
 
 Optional: seed demo data from Railway shell:
 
