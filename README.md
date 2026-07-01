@@ -11,7 +11,7 @@ Envelope Budgeting is a mobile-friendly personal finance app focused on:
 
 - Next.js 16 (App Router)
 - TypeScript + Tailwind CSS
-- Prisma ORM + SQLite
+- Prisma ORM + PostgreSQL (Railway)
 - JWT cookie sessions
 
 ## Core Features
@@ -24,27 +24,15 @@ Envelope Budgeting is a mobile-friendly personal finance app focused on:
 - **Insights**: month-over-month totals and category performance
 - **CSV export** for tax-deductible expenses
 
-## Quick Start
+## Railway Setup
 
-1. Install dependencies:
+1. Create a **PostgreSQL** database in your Railway project.
+2. Open your **web service → Variables**.
+3. Add a reference to Postgres `DATABASE_URL`.
+4. Add `JWT_SECRET` (long random string).
+5. Deploy from GitHub — build runs `prisma db push` to create tables automatically.
 
-```bash
-npm install
-```
-
-2. Copy environment values:
-
-```bash
-cp .env.example .env
-```
-
-3. Create/update database schema:
-
-```bash
-npm run db:push
-```
-
-4. (Optional) seed demo account:
+Optional: seed demo data from Railway shell:
 
 ```bash
 npm run db:seed
@@ -54,13 +42,15 @@ Demo login:
 - Email: `demo@envelope.local`
 - Password: `password123`
 
-5. Start app:
+## Local (optional)
+
+Requires a Postgres `DATABASE_URL` in `.env`, then:
 
 ```bash
+npm install
+npm run db:push
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
