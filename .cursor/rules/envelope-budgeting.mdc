@@ -1,0 +1,24 @@
+---
+description: Envelope Budgeting project identity and scope
+alwaysApply: true
+---
+
+# Envelope Budgeting
+
+This project is **Envelope Budgeting** — a mobile-friendly personal finance web app.
+
+## Stack
+- Next.js App Router, TypeScript, Tailwind CSS
+- PostgreSQL on Railway via Prisma
+- JWT cookie sessions
+
+## Core features
+- Expenses, income, categories, tax-deductible flags
+- Monthly budgets vs actuals
+- Goals (house, student debt, emergency fund, etc.)
+- Insights and CSV export
+
+## Conventions
+- Keep the UI simple and mobile-first
+- Amounts stored as integer cents in the database
+- Do not reset production Railway databases

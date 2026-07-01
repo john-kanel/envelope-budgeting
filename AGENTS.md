@@ -1,3 +1,7 @@
+# Envelope Budgeting
+
+Personal finance web app for expenses, income, budgets, goals, and insights.
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 
