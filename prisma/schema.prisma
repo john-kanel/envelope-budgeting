@@ -17,6 +17,7 @@ model User {
   expenses            Expense[]
   incomes             Income[]
   budgets             MonthlyBudget[]
+  goals               Goal[]
 }
 
 model Category {
@@ -79,4 +80,31 @@ model Income {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, receivedOn])
+}
+
+enum GoalType {
+  house
+  student_debt
+  emergency
+  car
+  vacation
+  other
+}
+
+model Goal {
+  id               String    @id @default(cuid())
+  userId           String
+  name             String
+  type             GoalType  @default(other)
+  targetAmountCents Int
+  savedAmountCents Int       @default(0)
+  targetDate       DateTime?
+  note             String?
+  isActive         Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isActive])
+  @@index([userId, type])
 }

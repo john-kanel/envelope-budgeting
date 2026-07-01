@@ -22,6 +22,7 @@ Envelope Budgeting is a mobile-friendly personal finance app focused on:
 - **Tax deductible flag** on every expense
 - **Budgets**: monthly category budgets with variance against actuals
 - **Insights**: month-over-month totals and category performance
+- **Goals**: track savings targets (house, student debt, emergency fund, etc.)
 - **CSV export** for tax-deductible expenses
 
 ## Railway Setup

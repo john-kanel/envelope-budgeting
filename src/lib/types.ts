@@ -48,3 +48,29 @@ export type Income = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type GoalType =
+  | "house"
+  | "student_debt"
+  | "emergency"
+  | "car"
+  | "vacation"
+  | "other";
+
+export type Goal = {
+  id: string;
+  userId: string;
+  name: string;
+  type: GoalType;
+  targetAmountCents: number;
+  targetAmount: number;
+  savedAmountCents: number;
+  savedAmount: number;
+  progressPercent: number;
+  remainingAmount: number;
+  targetDate: string | null;
+  note: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+};

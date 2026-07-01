@@ -20,11 +20,12 @@ async function main() {
   try {
     await prisma.$queryRaw`SELECT 1`;
 
-    const [users, categories, expenses, incomes] = await Promise.all([
+    const [users, categories, expenses, incomes, goals] = await Promise.all([
       prisma.user.count(),
       prisma.category.count(),
       prisma.expense.count(),
       prisma.income.count(),
+      prisma.goal.count(),
     ]);
 
     console.log("Database connected.");
@@ -32,6 +33,7 @@ async function main() {
     console.log("Categories:", categories);
     console.log("Expenses:", expenses);
     console.log("Incomes:", incomes);
+    console.log("Goals:", goals);
   } catch (error) {
     console.error("Database connection failed.");
     console.error(error instanceof Error ? error.message : error);

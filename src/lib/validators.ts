@@ -36,3 +36,26 @@ export const incomeSchema = z.object({
 export const profileSchema = z.object({
   startingBalance: z.number().min(-99999999).max(99999999),
 });
+
+export const goalTypeSchema = z.enum([
+  "house",
+  "student_debt",
+  "emergency",
+  "car",
+  "vacation",
+  "other",
+]);
+
+export const goalSchema = z.object({
+  name: z.string().trim().min(1).max(80),
+  type: goalTypeSchema.optional(),
+  targetAmount: z.number().positive().max(999999999),
+  savedAmount: z.number().nonnegative().max(999999999).optional(),
+  targetDate: z.iso.date().optional().or(z.literal("")),
+  note: z.string().trim().max(250).optional().or(z.literal("")),
+  isActive: z.boolean().optional(),
+});
+
+export const goalContributionSchema = z.object({
+  amount: z.number().positive().max(99999999),
+});
