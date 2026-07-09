@@ -87,7 +87,7 @@ export function ExpenseCategoryPieChart({
   const innerRadius = 58;
 
   const chartSlices = slices.reduce<
-    Array<ExpenseCategorySlice & { path: string; color: string }>
+    Array<ExpenseCategorySlice & { path: string; color: string; endAngle: number }>
   >((acc, slice, index) => {
     const startAngle = acc.length > 0 ? acc[acc.length - 1].endAngle : 0;
     const sweepAngle = (slice.amountCents / totalCents) * 360;
