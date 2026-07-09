@@ -6,6 +6,10 @@ import { apiFetch } from "@/lib/api-client";
 import { currentMonthKey } from "@/lib/month";
 import type { Category, Expense } from "@/lib/types";
 import { formatCurrency } from "@/lib/money";
+import {
+  buildExpenseCategorySlices,
+  ExpenseCategoryPieChart,
+} from "@/components/expense-category-pie-chart";
 
 type ExpensePayload = {
   amount: number;
@@ -26,6 +30,7 @@ const initialForm: ExpensePayload = {
 export function ExpensesScreen() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [monthExpenses, setMonthExpenses] = useState<Expense[]>([]);
   const [form, setForm] = useState<ExpensePayload>(initialForm);
   const [month, setMonth] = useState(currentMonthKey());
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -39,9 +44,21 @@ export function ExpensesScreen() {
     [expenses],
   );
 
+  const { slices: categorySlices, totalCents: monthTotalCents } = useMemo(
+    () => buildExpenseCategorySlices(monthExpenses),
+    [monthExpenses],
+  );
+
   async function loadCategories() {
     const data = await apiFetch<{ categories: Category[] }>("/api/categories");
     setCategories(data.categories.filter((item) => item.isActive));
+  }
+
+  async function loadMonthExpenses() {
+    const data = await apiFetch<{ expenses: Expense[] }>(
+      `/api/expenses?month=${month}`,
+    );
+    setMonthExpenses(data.expenses);
   }
 
   async function loadExpenses() {
@@ -51,10 +68,11 @@ export function ExpensesScreen() {
       const params = new URLSearchParams({ month });
       if (selectedCategory) params.set("categoryId", selectedCategory);
       if (taxOnly) params.set("taxOnly", "true");
-      const data = await apiFetch<{ expenses: Expense[] }>(
-        `/api/expenses?${params.toString()}`,
-      );
-      setExpenses(data.expenses);
+      const [filteredData] = await Promise.all([
+        apiFetch<{ expenses: Expense[] }>(`/api/expenses?${params.toString()}`),
+        loadMonthExpenses(),
+      ]);
+      setExpenses(filteredData.expenses);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load expenses.");
     } finally {
@@ -219,6 +237,19 @@ export function ExpensesScreen() {
             {editingId ? "Update expense" : "Add expense"}
           </button>
         </form>
+      </section>
+
+      <section className="rounded-xl border border-zinc-200 bg-white p-4">
+        <h2 className="text-base font-semibold text-zinc-900">Spending by category</h2>
+        <p className="mt-1 text-sm text-zinc-600">
+          Each slice is a share of total expenses for {month}.
+        </p>
+        <div className="mt-4">
+          <ExpenseCategoryPieChart
+            slices={categorySlices}
+            totalCents={monthTotalCents}
+          />
+        </div>
       </section>
 
       <section className="rounded-xl border border-zinc-200 bg-white p-4">
