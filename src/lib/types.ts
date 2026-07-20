@@ -74,3 +74,18 @@ export type Goal = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type MileageTrip = {
+  id: string;
+  userId: string;
+  milesTimes100: number;
+  miles: number;
+  reimbursementCents: number;
+  reimbursement: number;
+  tripDate: string;
+  purpose: string | null;
+  note: string | null;
+  isReimbursed: boolean;
+  createdAt: string;
+  updatedAt: string;
+};

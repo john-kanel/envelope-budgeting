@@ -59,3 +59,16 @@ export const goalSchema = z.object({
 export const goalContributionSchema = z.object({
   amount: z.number().positive().max(99999999),
 });
+
+export const mileageTripSchema = z.object({
+  miles: z.number().positive().max(99999),
+  tripDate: z.iso.date(),
+  purpose: z.string().trim().max(120).optional().or(z.literal("")),
+  note: z.string().trim().max(250).optional().or(z.literal("")),
+  isReimbursed: z.boolean().optional(),
+});
+
+export const mileageTripPatchSchema = mileageTripSchema.partial().refine(
+  (data) => Object.keys(data).length > 0,
+  { message: "At least one field is required." },
+);
